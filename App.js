@@ -1,75 +1,63 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-// import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import LoginScreen from './src/views/screens/LoginScreen';
+import RegistrationScreen from './src/views/screens/RegistrationScreen';
+import HomeScreen from './src/views/screens/HomeScreen';
+import Loader from './src/views/components/Loader';
+import ResetPasswordScreen from './src/views/screens/ResetPasswordScreen';
+import ForgotPasswordScreen from './src/views/screens/ForgotPasswordScreen';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Stack = createNativeStackNavigator();
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
+  const [initialRouteName, setInitialRouteName] = React.useState('');
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  React.useEffect(() => {
+    setTimeout(() => {
+      authUser();
+    }, 2000);
+  }, []);
+
+  const authUser = async () => {
+    try {
+      if (userData) {
+        userData = JSON.parse(userData);
+        if (userData.loggedIn) {
+          setInitialRouteName('HomeScreen');
+        } else {
+          setInitialRouteName('LoginScreen');
+        }
+      } else {
+        setInitialRouteName('RegistrationScreen');
+      }
+    } catch (error) {
+      setInitialRouteName('RegistrationScreen');
+    }
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Text>hi</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      {!initialRouteName ? (
+        <Loader visible={true} />
+      ) : (
+        <>
+          <Stack.Navigator
+            initialRouteName={initialRouteName}
+            screenOptions={{headerShown: false}}>
+            <Stack.Screen
+              name="RegistrationScreen"
+              component={RegistrationScreen}
+            />
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
+            <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+          </Stack.Navigator>
+        </>
+      )}
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
