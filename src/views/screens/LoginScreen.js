@@ -31,10 +31,11 @@ const LoginScreen = ({ navigation }) => {
 
 	const logIn = async () => {
 		try {
+			
 			setLoading(true);
 			await login(inputs.email, inputs.password);
 		} catch (error) {
-			Alert.alert('Error', 'Something went wrong');
+			Alert.alert('Error', 'Invalid username or password :(');
 		}
 		setLoading(false)
 	};

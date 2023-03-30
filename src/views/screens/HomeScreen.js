@@ -1,48 +1,144 @@
+
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, Text, View, ScrollView } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import Button from '../components/Button';
+import {Button as Butt} from 'react-native-paper';
+import { Card, ListItem, Icon } from 'react-native-elements'
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// const Tab = createBottomTabNavigator();
+
 
 const HomeScreen = ({ navigation }) => {
-	const [userDetails, setUserDetails] = useState();
-	const { getSnap, logout, currentUser } = useAuth();
-	const fetchPost = async () => {
 
-		try {
 
-			const docSnap = await getSnap("users", currentUser && currentUser.email);
+	// const onPress = () => {
+	// 	props.navigation.navigate('AddScreen');
+	//   };
+	return(
+    <ScrollView>
+	<Card>
+  <Card.Title>HELLO WORLD</Card.Title>
+  <Card.Divider/>
+  <Card.Image source={require('../../conts/images/sambar.png')} />
+  {/* <Text style={{marginBottom: 10}}>
+      The idea with React Native Elements is more about component structure than actual design.
+  </Text> */}
+  
+  <Button
+	  // onPress={onPress}
+    onPress={() => {
+      navigation.navigate('AddScreen');
+      console.log('AddScreen pressed');
+    }}
+    // icon={<Icon name='code' color='#ffffff' />}
+    // buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+    
+    title='VIEW NOW' />
+</Card>
+<Card>
+  <Card.Title>HELLO WORLD</Card.Title>
+  <Card.Divider/>
+  <Card.Image source={require('../../conts/images/biryani.png')} />
+  {/* <Text style={{marginBottom: 10}}>
+      The idea with React Native Elements is more about component structure than actual design.
+  </Text> */}
+  
+  <Button
+	  // onPress={onPress}
+    onPress={() => {
+      navigation.navigate('AddScreen');
+      console.log('AddScreen pressed');
+    }}
+    // icon={<Icon name='code' color='#ffffff' />}
+    // buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+    
+    title='VIEW NOW' />
+</Card>
+<Card>
+  <Card.Title>HELLO WORLD</Card.Title>
+  <Card.Divider/>
+  <Card.Image source={require('../../conts/images/biryani.png')} />
+  {/* <Text style={{marginBottom: 10}}>
+      The idea with React Native Elements is more about component structure than actual design.
+  </Text> */}
+  
+  <Button
+	  // onPress={onPress}
+    onPress={() => {
+      navigation.navigate('AddScreen');
+      console.log('AddScreen pressed');
+    }}
+    // icon={<Icon name='code' color='#ffffff' />}
+    // buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+    
+    title='VIEW NOW' />
+</Card>
+<Card>
+  <Card.Title>HELLO WORLD</Card.Title>
+  <Card.Divider/>
+  <Card.Image source={require('../../conts/images/biryani.png')} />
+  {/* <Text style={{marginBottom: 10}}>
+      The idea with React Native Elements is more about component structure than actual design.
+  </Text> */}
+  <Button
+	  // onPress={onPress}
+    onPress={() => {
+      navigation.navigate('AddScreen');
+      console.log('AddScreen pressed');
+    }}
+    // icon={<Icon name='code' color='#ffffff' />}
+    // buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+    
+    title='VIEW NOW' />
+  
 
-			setUserDetails(docSnap.data());
+</Card>
 
-		} catch (e) {
-			console.log(e);
-		}
-	}
 
-	useEffect(() => {
-		fetchPost();
-	}, [])
 
-	return (
-		<View
-			style={{
-				flex: 1,
-				alignItems: 'center',
-				justifyContent: 'center',
-				paddingHorizontal: 40,
-			}}>
-			<Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-				Username: {userDetails?.Name}
-			</Text>
-			<Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-				Email ID: {userDetails?.Email}
-			</Text>
-			<Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-				Phone Number: {userDetails?.Mobile}
-			</Text>
-			<Button title="Logout" onPress={async () => await logout()} />
-		</View>
+</ScrollView>
 	);
 };
 
 export default HomeScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
