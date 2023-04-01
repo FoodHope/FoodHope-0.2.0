@@ -27,16 +27,16 @@ const HomeScreen = ({ navigation }) => {
 	//   };
 	return (
 		<ScrollView>
+			<View style={{ backgroundColor: '#5D5FEE', padding: 23 }}>
+        <Text style={{ color: 'white', fontSize: 30, fontWeight: "bold" }}>Food Hope</Text>
+      </View>
 			<Card>
 				<Card.Title>HELLO WORLD</Card.Title>
 				<Card.Divider />
 				<Card.Image source={require('../../conts/images/biryani.png')} />
-				{/* <Text style={{marginBottom: 10}}>
-      The idea with React Native Elements is more about component structure than actual design.
-  </Text> */}
+				
 
 				<Button
-					// onPress={onPress}
 					onPress={() => {
 						navigation.navigate('AddScreen');
 						console.log('AddScreen pressed');
