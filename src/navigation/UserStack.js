@@ -1,13 +1,14 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import HomeScreen from '../views/screens/HomeScreen';
-import AccountScreen from '../views/screens/AccountScreen';
+import SettingsScreen from '../views/screens/SettingsScreen';
 import AddScreen from '../views/screens/AddScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button } from "react-native-paper";
-
+import { TouchableOpacity, Image } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 
 const Stack = createNativeStackNavigator();
@@ -15,44 +16,51 @@ const Stack = createNativeStackNavigator();
 
 const UserStack = ({ navigation }) => {
     return (<>
-        {/* <NavigationContainer> */}
-
         <Stack.Navigator
-            initialRouteName={"AddScreen"}
-            screenOptions={{ headerShown: false }}
-        >
+            initialRouteName={"HomeScreen"}
+            screenOptions={{
+                headerShown: false,
+                statusBarColor: '#5D5FEE',
+            }}
+            >
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="AddScreen" component={AddScreen} />
-            <Stack.Screen name="AccountScreen" component={AccountScreen} />
+            <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
         </Stack.Navigator>
-        <Button />
-        {/* </NavigationContainer> */}
-        <View style={{ display: 'flex', height: 50, flexDirection: 'row', justifyContent: 'space-around', marginTop: -30 }} >
-            <Button
-                icon={require('../conts/images/home.png')}
-                onPress={() => {
-                    navigation.navigate('HomeScreen');
-                    console.log('Home pressed');
-                }}
-            />
-            <Button
-                icon={require('../conts/images/add.png')}
-                onPress={() => {
-                    navigation.navigate('AddScreen');
-                    console.log('Add pressed');
-                }}
-            />
 
-            <Button
-                icon={require('../conts/images/account.png')}
-                onPress={() => {
-                    navigation.navigate('AddScreen');
-                    console.log('Add pressed');
-                }}
-            />
+
+        <View style={{
+            backgroundColor: '#5D5FEE',
+            display: 'flex',
+            height: 60,
+            paddingTop: 17,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+
+        }} >
+
+            <TouchableOpacity onPress={()=> navigation.navigate("HomeScreen")}>
+                <Image
+                    source={require('../conts/images/home.png')}
+                    style={{ width: 25, height: 25 }}
+                />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=> navigation.navigate("AddScreen")}>
+                <Image
+                    source={require('../conts/images/add.png')}
+                    style={{ width: 25, height: 25 }}
+                />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=> navigation.navigate("SettingsScreen")}>
+                <Image
+                    source={require('../conts/images/settings.png')}
+                    style={{ width: 25, height: 25 }}
+                />
+            </TouchableOpacity>
 
         </View>
-
     </>
 
     )
