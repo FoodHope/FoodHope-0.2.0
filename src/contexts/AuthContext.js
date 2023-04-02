@@ -57,17 +57,22 @@ export function AuthProvider({ children }) {
 		return setDoc(doc(db, collection, document), data);
 	}
 
-	const fetchFood = async () => {
-		const querySnapshot = await getDocs(collection(db, "FoodData"));
-		querySnapshot.forEach((doc) => {
-			console.log(`${doc.id} => ${doc.data()}`);
-			setFoodData(prev => [...prev, doc]);
-		});
+	function fetchFood() {
+		return getDocs(collection(db, "FoodData"));
+		
 	};
+
+	const images = [
+		require('../conts/images/biryani.png'),
+		require('../conts/images/sambar.png'),
+		require('../conts/images/biryani.png'),
+		require('../conts/images/sambar.png'),
+		require('../conts/images/biryani.png'),
+	  ];
 
 
 	useEffect(() => {
-		fetchFood();
+		// const fetch = fetchFood();
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			setCurrentUser(user)
 			setLoading(false);
@@ -79,6 +84,8 @@ export function AuthProvider({ children }) {
 	const value = {
 		currentUser,
 		FoodData,
+		images,
+		fetchFood,
 		login,
 		signup,
 		logout,

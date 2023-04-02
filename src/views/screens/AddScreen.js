@@ -3,22 +3,17 @@ import React, { useState } from 'react'
 import Input from '../components/Input';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Swiper from 'react-native-swiper';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 export default function AddScreen() {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const images = [
-    require('../../conts/images/biryani.png'),
-    require('../../conts/images/sambar.png'),
-    require('../../conts/images/biryani.png'),
-    require('../../conts/images/sambar.png'),
-    require('../../conts/images/biryani.png'),
-  ];
+  const { images } = useAuth();
 
 
   onIndexChanged = (index) => {
-    setSelectedIndex(index);
+    setSelectedIndex(index+1);
   };
   return (
     <>
@@ -31,7 +26,7 @@ export default function AddScreen() {
             <Swiper onIndexChanged={onIndexChanged}>
               {images.map((image, index) => (
                 <View key={index}>
-                  <Image source={image} style={{width: "100%", height: 180}} />
+                  <Image source={images[index]} style={{width: "100%", height: 180}} />
                 </View>
               ))}
             </Swiper>
