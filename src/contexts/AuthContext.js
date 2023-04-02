@@ -59,17 +59,23 @@ export function AuthProvider({ children }) {
 
 	function fetchFood() {
 		return getDocs(collection(db, "FoodData"));
-		
 	};
 
-	const images = [
-		require('../conts/images/biryani.png'),
-		require('../conts/images/sambar.png'),
-		require('../conts/images/biryani.png'),
-		require('../conts/images/sambar.png'),
-		require('../conts/images/biryani.png'),
-	  ];
+	function addFood(name, imageID, veg, serves, expiresIn, phNum, alt ){
+		
+	}
 
+	function capitalize(s) {
+		return s && s[0].toUpperCase() + s.slice(1);
+	}
+
+	const images = [
+		require('../conts/images/meals.png'),
+		require('../conts/images/tiffen.png'),
+		require('../conts/images/biryani.png'),
+		require('../conts/images/sidedish.png'),
+		require('../conts/images/beverages.png'),
+	];
 
 	useEffect(() => {
 		// const fetch = fetchFood();
@@ -77,7 +83,6 @@ export function AuthProvider({ children }) {
 			setCurrentUser(user)
 			setLoading(false);
 		})
-
 		return unsubscribe;
 	}, [])
 
@@ -85,6 +90,7 @@ export function AuthProvider({ children }) {
 		currentUser,
 		FoodData,
 		images,
+		capitalize,
 		fetchFood,
 		login,
 		signup,

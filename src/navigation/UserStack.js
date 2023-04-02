@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import HomeScreen from '../views/screens/HomeScreen';
-import SettingsScreen from '../views/screens/SettingsScreen';
+import SettingsScreen from '../views/screens/Settings/SettingsScreen';
 import AddScreen from '../views/screens/AddScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,6 +9,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button } from "react-native-paper";
 import { TouchableOpacity, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
+import UploadsScreen from '../views/screens/Settings/UploadsScreen';
+import ProfileScreen from '../views/screens/Settings/ProfileScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -17,7 +19,7 @@ const Stack = createNativeStackNavigator();
 const UserStack = ({ navigation }) => {
     return (<>
         <Stack.Navigator
-            initialRouteName={"HomeScreen"}
+            initialRouteName={"AddScreen"}
             screenOptions={{
                 headerShown: false,
                 statusBarColor: '#5D5FEE',
@@ -26,6 +28,8 @@ const UserStack = ({ navigation }) => {
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="AddScreen" component={AddScreen} />
             <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+            <Stack.Screen name="UploadsScreen" component={UploadsScreen} />
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         </Stack.Navigator>
 
 

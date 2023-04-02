@@ -30,7 +30,7 @@ const RegistrationScreen = ({ navigation }) => {
 		Keyboard.dismiss();
 		let isValid = true;
 
-		if (!inputs.email) {
+		if (!inputs.name) {
 			handleError('Please input email', 'email');
 			isValid = false;
 		} else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
@@ -72,6 +72,7 @@ const RegistrationScreen = ({ navigation }) => {
 		} catch (error) {
 			Alert.alert('Error', 'Something went wrong');
 		}
+
 		setLoading(false)
 
 	};
@@ -96,7 +97,7 @@ const RegistrationScreen = ({ navigation }) => {
 					<Input
 						onChangeText={text => handleOnchange(text, 'email')}
 						onFocus={() => handleError(null, 'email')}
-						iconName="email-outline"
+						// iconName="email-outline"
 						label="Email ID"
 						placeholder="Enter your email address"
 						error={errors.email}
@@ -105,7 +106,7 @@ const RegistrationScreen = ({ navigation }) => {
 					<Input
 						onChangeText={text => handleOnchange(text, 'fullname')}
 						onFocus={() => handleError(null, 'fullname')}
-						iconName="account-outline"
+						// iconName="account-outline"
 						label="User Name"
 						placeholder="Enter your full name"
 						error={errors.fullname}
@@ -115,7 +116,7 @@ const RegistrationScreen = ({ navigation }) => {
 						keyboardType="numeric"
 						onChangeText={text => handleOnchange(text, 'phone')}
 						onFocus={() => handleError(null, 'phone')}
-						iconName="phone-outline"
+						// iconName="phone-outline"
 						label="Phone Number"
 						placeholder="Enter your phone number"
 						error={errors.phone}
@@ -123,7 +124,7 @@ const RegistrationScreen = ({ navigation }) => {
 					<Input
 						onChangeText={text => handleOnchange(text, 'password')}
 						onFocus={() => handleError(null, 'password')}
-						iconName="lock-outline"
+						// iconName="lock-outline"
 						label="Password"
 						placeholder="Enter your password"
 						error={errors.password}
@@ -132,7 +133,7 @@ const RegistrationScreen = ({ navigation }) => {
 					<Input
 						onChangeText={text => handleOnchange(text, 'password')}
 						onFocus={() => handleError(null, 'password')}
-						iconName="lock-outline"
+						// iconName="lock-outline"
 						label="Confirm Password"
 						placeholder="Re-Enter password"
 						error={errors.password}

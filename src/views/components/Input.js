@@ -1,5 +1,8 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
+// import Icon from 'react-native-paper';
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
+// import { Icon } from 'react-native-elements';
 import COLORS from '../../conts/colors';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Input = ({
@@ -7,28 +10,33 @@ const Input = ({
   iconName,
   error,
   password,
-  onFocus = () => {},
+  style,
+  onFocus = () => { },
   ...props
 }) => {
   const [hidePassword, setHidePassword] = React.useState(password);
   const [isFocused, setIsFocused] = React.useState(false);
   return (
-    <View style={{marginBottom: 20}}>
-      <Text style={style.label}>{label}</Text>
+    <View style={{ marginBottom: 20 }}>
+      {label ? <Text style={styles.label}>{label}</Text> : null}
       <View
-        style={[
-          style.inputContainer,
-          {
-            borderColor: error
-              ? COLORS.red
-              : isFocused
-              ? COLORS.darkBlue
-              : COLORS.light,
-            alignItems: 'center',
-          },
-        ]}>
-        {/* <Icon
-          name={iconName}
+        style={
+
+          [
+            style ? null : styles.inputContainer,
+            {
+              borderColor: error
+                ? COLORS.red
+                : isFocused
+                  ? COLORS.darkBlue
+                  : COLORS.light,
+              borderWidth: 0.5,
+
+              // alignItems: 'center',
+            },
+          ]}>
+        {/* <AwesomeIcon
+          name='email'
           style={{color: COLORS.darkBlue, fontSize: 22, marginRight: 10}}
         /> */}
         <TextInput
@@ -39,7 +47,7 @@ const Input = ({
           }}
           onBlur={() => setIsFocused(false)}
           secureTextEntry={hidePassword}
-          style={{color: COLORS.darkBlue, flex: 1}}
+          style={style ? style : { color: COLORS.darkBlue, flex: 1 }}
           {...props}
         />
         {/* {password && (
@@ -51,7 +59,7 @@ const Input = ({
         } */}
       </View>
       {error && (
-        <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}>
+        <Text style={{ marginTop: 7, color: COLORS.red, fontSize: 12 }}>
           {error}
         </Text>
       )}
@@ -59,7 +67,7 @@ const Input = ({
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   label: {
     marginVertical: 5,
     fontSize: 14,
@@ -70,7 +78,6 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.light,
     flexDirection: 'row',
     paddingHorizontal: 15,
-    borderWidth: 0.5,
   },
 });
 
