@@ -3,6 +3,7 @@ import {
 	View,
 	Text,
 	SafeAreaView,
+	StyleSheet,
 	Keyboard,
 	ScrollView,
 	Alert,
@@ -20,6 +21,7 @@ const RegistrationScreen = ({ navigation }) => {
 		fullname: '',
 		phone: '',
 		password: '',
+		address: '',
 	});
 	const [errors, setErrors] = React.useState({});
 	const [loading, setLoading] = React.useState(false);
@@ -48,6 +50,12 @@ const RegistrationScreen = ({ navigation }) => {
 			isValid = false;
 		}
 
+		if (!inputs.address) {
+			handleError('Please enter the address', 'address');
+			isValid = false;
+		}
+
+
 		if (!inputs.password) {
 			handleError('Please input password', 'password');
 			isValid = false;
@@ -68,9 +76,10 @@ const RegistrationScreen = ({ navigation }) => {
 
 		try {
 			setLoading(true);
-			await signup(inputs.email, inputs.password, inputs.fullname, inputs.phone);
+			await signup(inputs.email, inputs.password, inputs.fullname, inputs.phone, inputs.address);
 		} catch (error) {
-			Alert.alert('Error', 'Something went wrong');
+			Alert.alert('Error', 'Something went wrong',);
+			console.log(error)
 		}
 
 		setLoading(false)
@@ -83,11 +92,13 @@ const RegistrationScreen = ({ navigation }) => {
 	const handleError = (error, input) => {
 		setErrors(prevState => ({ ...prevState, [input]: error }));
 	};
+
 	return (
 		<SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1, justifyContent: 'center' }}>
+			<Loader visible={loading} />
 			<ScrollView
 				contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
-				<Text style={{ color: COLORS.black, fontSize: 40, fontWeight: 'bold' }}>
+				<Text style={{ color: '#5D5FEE', fontSize: 40, fontWeight: 'bold' }}>
 					Sign Up
 				</Text>
 				<Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>
@@ -139,11 +150,23 @@ const RegistrationScreen = ({ navigation }) => {
 						error={errors.password}
 						password
 					/>
+
+					<Input
+						onChangeText={text => handleOnchange(text, 'address')}
+						label="Address"
+						onFocus={() => handleError(null, 'address')}
+						placeholder="Enter the address"
+						error={errors.address}
+						multiline={true}
+						style={styles.input}
+						numberOfLines={4}
+					/>
+
 					<Button title="Register" onPress={validate} />
 					<Text
-						onPress={() => navigation.navigate('LoginScreen')}
+						onPress={() => navigation.navigate("LoginScreen")}
 						style={{
-							color: COLORS.black,
+							color: '#5D5FEE',
 							fontWeight: 'bold',
 							textAlign: 'center',
 							fontSize: 16,
@@ -156,4 +179,34 @@ const RegistrationScreen = ({ navigation }) => {
 	);
 };
 
+
+
+const styles = StyleSheet.create({
+
+
+    input: {
+
+        // width:'50%',
+
+        // borderColor: '#dbdbdb',
+        backgroundColor: '#F3F4FB',
+        paddingHorizontal: 15,
+        // borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        fontSize: 14,
+        textAlignVertical: 'top',
+
+    },
+
+    label: {
+        // margin:10,
+        fontSize: 18,
+        color: '#5D5FEE',
+        fontWeight: 'bold',
+        paddingHorizontal: 10,
+        marginBottom: 10,
+    },
+
+});
 export default RegistrationScreen;

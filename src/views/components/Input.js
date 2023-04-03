@@ -47,7 +47,7 @@ const Input = ({
           }}
           onBlur={() => setIsFocused(false)}
           secureTextEntry={hidePassword}
-          style={style ? style : { color: COLORS.darkBlue, flex: 1 }}
+          style={style ? style : { color: 'black', flex: 1 }}
           {...props}
         />
         {/* {password && (
@@ -70,8 +70,9 @@ const Input = ({
 const styles = StyleSheet.create({
   label: {
     marginVertical: 5,
-    fontSize: 14,
-    color: COLORS.grey,
+    fontSize: 18,
+		color: '#5D5FEE',
+		fontWeight: 'bold',
   },
   inputContainer: {
     height: 55,

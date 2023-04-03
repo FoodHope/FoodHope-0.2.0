@@ -11,6 +11,8 @@ import { TouchableOpacity, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import UploadsScreen from '../views/screens/Settings/UploadsScreen';
 import ProfileScreen from '../views/screens/Settings/ProfileScreen';
+import ViewDetailsScreen from '../views/screens/ViewDetailsScreen';
+import EditScreen from '../views/screens/Settings/EditScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +21,7 @@ const Stack = createNativeStackNavigator();
 const UserStack = ({ navigation }) => {
     return (<>
         <Stack.Navigator
-            initialRouteName={"AddScreen"}
+            initialRouteName={"HomeScreen"}
             screenOptions={{
                 headerShown: false,
                 statusBarColor: '#5D5FEE',
@@ -30,6 +32,8 @@ const UserStack = ({ navigation }) => {
             <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
             <Stack.Screen name="UploadsScreen" component={UploadsScreen} />
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+            <Stack.Screen name="ViewDetailsScreen" component={ViewDetailsScreen} />
+            <Stack.Screen name="EditScreen" component={EditScreen} />
         </Stack.Navigator>
 
 

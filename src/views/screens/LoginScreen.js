@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Keyboard, Alert } from 'react-native';
+import { View, Text, SafeAreaView, Keyboard, Alert, ScrollView } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import COLORS from '../../conts/colors';
 import Button from '../components/Button';
@@ -31,11 +31,12 @@ const LoginScreen = ({ navigation }) => {
 
 	const logIn = async () => {
 		try {
-			
+
 			setLoading(true);
 			await login(inputs.email, inputs.password);
 		} catch (error) {
 			Alert.alert('Error', 'Invalid username or password :(');
+			console.log(error)
 		}
 		setLoading(false)
 	};
@@ -48,55 +49,59 @@ const LoginScreen = ({ navigation }) => {
 		setErrors(prevState => ({ ...prevState, [input]: error }));
 	};
 	return (
-		<SafeAreaView style={{ flex: 1, justifyContent: 'center', backgroundColor: COLORS.white}}>
-			<View style={{  paddingHorizontal: 20 }}>
-				<Text style={{ color: COLORS.black, fontSize: 40, fontWeight: 'bold' }}>
-					Log In
-				</Text>
-				<Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>
-					Enter Your Details to Login
-				</Text>
-				<View style={{ marginVertical: 20 }}>
-					<Input
-						onChangeText={text => handleOnchange(text, 'email')}
-						onFocus={() => handleError(null, 'email')}
-						iconName="email-outline"
-						label="Email ID"
-						placeholder="Enter your Email ID"
-						error={errors.email}
-					/>
-					<Input
-						onChangeText={text => handleOnchange(text, 'password')}
-						onFocus={() => handleError(null, 'password')}
-						iconName="lock-outline"
-						label="Password"
-						placeholder="Enter your password"
-						error={errors.password}
-						password
-					/>
-					<Text
-						onPress={() => navigation.navigate('ForgotPasswordScreen')}
-						style={{
-							color: COLORS.black,
-							fontWeight: 'bold',
-							textAlign: 'center',
-							fontSize: 16,
-						}}>
-						Forgot Password?
+		<SafeAreaView style={{ flex: 1, justifyContent: 'center', backgroundColor: COLORS.white }}>
+			<Loader visible={loading} />
+			<ScrollView contentContainerStyle={{ paddingHorizontal: 20, flex: 1, justifyContent: 'center' }}>
+				{/* <View style={{ justifyContent: 'center'}}> */}
+					<Text style={{ color: '#5D5FEE', fontSize: 40, fontWeight: 'bold' }}>
+						Log In
 					</Text>
-					<Button title="Log In" onPress={validate} />
-					<Text
-						onPress={() => navigation.navigate('RegistrationScreen')}
-						style={{
-							color: COLORS.black,
-							fontWeight: 'bold',
-							textAlign: 'center',
-							fontSize: 16,
-						}}>
-						Don't have account ?Register
+					<Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>
+						Enter Your Details to Login
 					</Text>
-				</View>
-			</View>
+					<View style={{ marginVertical: 20 }}>
+						<Input
+							onChangeText={text => handleOnchange(text, 'email')}
+							onFocus={() => handleError(null, 'email')}
+							iconName="email-outline"
+							label="Email ID"
+							placeholder="Enter your Email ID"
+							error={errors.email}
+						/>
+						<Input
+							onChangeText={text => handleOnchange(text, 'password')}
+							onFocus={() => handleError(null, 'password')}
+							iconName="lock-outline"
+							label="Password"
+							placeholder="Enter your password"
+							error={errors.password}
+							password
+						/>
+						<Text
+							onPress={() => navigation.navigate('ForgotPasswordScreen')}
+							style={{
+								color: '#5D5FEE',
+								fontWeight: 'bold',
+								textAlign: 'center',
+								fontSize: 16,
+							}}>
+							Forgot Password?
+						</Text>
+						<Button title="Log In" onPress={validate} />
+						<Text
+							onPress={() => navigation.navigate('RegistrationScreen')}
+							style={{
+								color: '#5D5FEE',
+								fontWeight: 'bold',
+								textAlign: 'center',
+								fontSize: 16,
+							}}>
+							Don't have account ?Register
+						</Text>
+					</View>
+				{/* </View> */}
+
+			</ScrollView>
 		</SafeAreaView>
 	);
 };

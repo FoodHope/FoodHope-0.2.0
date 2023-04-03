@@ -10,6 +10,11 @@ import { AuthProvider } from './src/contexts/AuthContext';
 import Auth from './src/Auth';
 import Index from './src/navigation/Index';
 
+import { LogBox } from 'react-native';
+
+
+LogBox.ignoreAllLogs();
+
 function App() {
 
     return (

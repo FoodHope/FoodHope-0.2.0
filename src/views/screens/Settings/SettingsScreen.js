@@ -1,10 +1,12 @@
 
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View,Linking } from 'react-native';
+import Loader from '../../components/Loader';
+import { StyleSheet, Text, TouchableOpacity, View, Linking, ScrollView, SafeAreaView } from 'react-native';
 import { useAuth } from '../../../contexts/AuthContext';
 
-const SettingsScreen = ({navigation}) => {
+const SettingsScreen = ({ navigation }) => {
 
+  // const [loading, setLoading] = React.useState(false);
   const { logout } = useAuth();
 
   const handleProfilePress = () => {
@@ -22,9 +24,14 @@ const SettingsScreen = ({navigation}) => {
     await logout();
     console.log('logout');
   };
-  
+
+  const handleInstagramPress = () => {
+    Linking.openURL('https://www.instagram.com/foodhope_offl/');
+  }
+
+
   return (<>
-    <View >
+    <SafeAreaView style={{flex:1}}>
       <View style={{ backgroundColor: '#5D5FEE', padding: 23 }}>
         <Text style={{ color: 'white', fontSize: 30, fontWeight: "bold" }}>Settings</Text>
       </View>
@@ -41,8 +48,13 @@ const SettingsScreen = ({navigation}) => {
         <Text style={styles.logout}>Logout</Text>
       </TouchableOpacity>
 
+     <View style={styles.reachUs}>
+      <TouchableOpacity onPress={handleInstagramPress} style={styles.reach}>
+        <Text style={styles.reachUsList}>Reach us through instagram</Text>
+      </TouchableOpacity>
+      </View>
 
-    </View>
+    </SafeAreaView>
   </>
 
   );
@@ -55,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: '5D5FE',
     borderTopColor: '#dbdbdb',
     borderTopWidth: StyleSheet.hairlineWidth,
-    
+
     width: '100%',
   },
   listItem: {
@@ -65,33 +77,45 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
 
   },
+
+  reach:{
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderBottomColor: 'lightgrey',
+    borderBottomWidth: 1,
+    borderTopWidth:1,
+    borderTopColor:'lightgrey',
+
+  },
   listItemText: {
     fontSize: 23,
     fontWeight: '300',
   },
 
-  logout:{
-    color:'red',
-    fontSize: 23,
-    fontWeight: '400',
+  reachUsList:{
+    fontSize: 18,
+    fontWeight: '300',
+
   },
 
-  reachUsButtonText: {
-    // color: '#fff',
-    fontSize: 15,
+  logout: {
+    color: 'red',
+    fontSize: 23,
     fontWeight: '300',
-    // position: 'absolute',
+  },
+
+  reachUs:{
+    position: 'absolute',
+    // height: 50, // Or any height you want
     justifyContent: 'center',
     alignItems: 'center',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    
+  }
 
-    width: '100%',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderBottomColor: 'lightgrey',
-    borderTopColor:'lightgrey',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-  },
+  
 });
 
 export default SettingsScreen;

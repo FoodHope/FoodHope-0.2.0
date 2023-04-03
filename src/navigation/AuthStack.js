@@ -19,7 +19,7 @@ export default function AuthStack() {
 
             <Stack.Navigator
                 initialRouteName={"LoginScreen"}
-                screenOptions={{ headerShown: false }}
+                screenOptions={{ headerShown: false, statusBarColor: '#5D5FEE' }}
             >
                 <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />

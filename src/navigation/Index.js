@@ -14,7 +14,7 @@ export default function Index() {
     return <NavigationContainer>
 
         {currentUser ? (
-            <Stack.Navigator initialRouteName='UserStack' screenOptions={{ headerShown: false }}>
+            <Stack.Navigator initialRouteName='UserStack' screenOptions={{ headerShown: false,  }}>
                 <Stack.Screen name='UserStack' component={UserStack} />
             </Stack.Navigator>)
             : <AuthStack />}

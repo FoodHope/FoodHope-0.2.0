@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, StyleSheet, Animated, Image, Alert, Touchable, Keyboard } from 'react-native'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../components/Input';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Swiper from 'react-native-swiper';
@@ -8,14 +8,16 @@ import { TouchableOpacity } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from 'react-native-elements';
 import COLORS from '../../conts/colors';
+import Loader from '../components/Loader';
 
-const AddScreen = () => {
+const AddScreen = ({navigation}) => {
 
 	const [inputs, setInputs] = useState({
 		name: '',
 		veg: true,
 		serves: '',
-		selectedIndex: '',
+		imageID: 0,
+		area: '',
 		expiresIn: '',
 		phNum: '',
 		alt_phNum: '',
@@ -24,28 +26,28 @@ const AddScreen = () => {
 		desc: ''
 	});
 
+
+	
 	const [errors, setErrors] = useState({});
 
-	const [loading, setLoading] = React.useState(false);
+	const [loading, setLoading] = useState(false);
 
-	const [veg, setVeg] = useState(true);
+	const [user, setUser] = useState();
 
-	const [selectedIndex, setSelectedIndex] = useState(0);
+	const { images, addFood, currentUser, getUserDetails } = useAuth();
 
-	const { images } = useAuth();
+	// onIndexChanged = (index) => {
+	// 	setInputs(index);
+	// };
 
-	onIndexChanged = (index) => {
-		setSelectedIndex(index);
-	};
+	useEffect(() => {
+		get();
+	}, [])
 
-	const handleChange = (text) => {
-		setDescription(text);
-	};
-
-	const handlePhoneNumberChange = (input) => {
-		// Remove all non-numeric characters from the input string
-		const formattedInput = input.replace(/[^0-9]/g, '');
-		setPhoneNumber(formattedInput);
+	async function get() {
+		const docRef = await getUserDetails();
+		setUser(docRef.data())
+		console.log("user", docRef.data());
 	}
 
 
@@ -79,11 +81,16 @@ const AddScreen = () => {
 			isValid = false;
 		}
 
+		if (!inputs.area) {
+			handleError('Please input area', 'area');
+			isValid = false;
+		}
+
 		if (!inputs.phNum) {
 			handleError('Please input contact number', 'phNum');
 			isValid = false;
-		} else if(inputs.phNum.length !== 10) {
-			handleError('Please input valid number', 'phNum');
+		} else if (inputs.phNum.length !== 10) {
+			handleError('Please input valid 10 digit number', 'phNum');
 			isValid = false;
 		}
 
@@ -98,20 +105,51 @@ const AddScreen = () => {
 		}
 
 		if (isValid) {
-			addFood();
+			Alert.alert(
+                'Confirm Upload?',
+                'Are you sure you want to upload?',
+                [
+                    {
+                        text: 'No',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Yes',
+                        onPress: () => submit(),
+                        style: 'destructive'
+                    }
+                ],
+                { cancelable: false }
+            );
 		}
 	};
 
-	const addFood = async () => {
+	const submit = async () => {
 
 		try {
 			setLoading(true);
-			console.log("vlaied");
-			await setSnap()
+			await addFood(
+				user.Name,
+				inputs.name,
+				inputs.imageID,
+				inputs.veg,
+				inputs.area,
+				inputs.serves,
+				inputs.expiresIn,
+				inputs.phNum,
+				inputs.alt_phNum,
+				inputs.address,
+				inputs.landmark,
+				inputs.desc
+			);
+			setLoading(false)
+			navigation.navigate("HomeScreen")
 		} catch (error) {
 			Alert.alert('Error', 'Something went wrong');
+			console.log(error)
 		}
-		setLoading(false)
+		
 
 	};
 
@@ -127,7 +165,7 @@ const AddScreen = () => {
 			<View style={{ backgroundColor: '#5D5FEE', padding: 23 }}>
 				<Text style={{ color: 'white', fontSize: 30, fontWeight: "bold" }}>Add Food Details</Text>
 			</View>
-
+            <Loader visible={loading} />
 			<ScrollView style={{ backgroundColor: 'white' }}>
 				<View style={{ marginVertical: 20, marginHorizontal: 20 }}>
 
@@ -148,7 +186,7 @@ const AddScreen = () => {
 							error={errors.name}
 						/>
 					</View>
-					
+
 					<View style={{
 						marginBottom: 20,
 						height: 280,
@@ -159,7 +197,7 @@ const AddScreen = () => {
 					}}>
 						<Text style={styles.label}>Please Select the Food Type</Text>
 
-						<Swiper onIndexChanged={onIndexChanged}>
+						<Swiper onIndexChanged={item => handleOnchange(item, 'imageID')}>
 							{images.map((image, index) => (
 								<View key={index}>
 									<Image source={image} style={{ margin: 10, width: "50%", height: 180, alignSelf: 'center' }} />
@@ -172,8 +210,8 @@ const AddScreen = () => {
 					<View style={[{ marginBottom: 20 }, styles.container]}>
 						<Text style={styles.label}>Veg / Non-Veg<Text style={{ color: 'red' }}> *</Text></Text>
 						<Picker style={{ backgroundColor: '#F3F4FB' }}
-							selectedValue={veg}
-							onValueChange={(itemValue, itemIndex) => setVeg(itemValue)}
+							selectedValue={inputs.veg}
+							onValueChange={(itemValue, itemIndex) => handleOnchange(itemValue, 'veg')}
 						>
 							<Picker.Item label="Veg" value={true} />
 							<Picker.Item label="Non-Veg" value={false} />
@@ -221,6 +259,17 @@ const AddScreen = () => {
 							placeholder="Enter the Alternate Contact number"
 							error={errors.alt_phNum}
 							keyboardType='numeric'
+						/>
+					</View>
+
+					<View style={styles.container}>
+						<Text style={styles.label}>Area<Text style={{ color: 'red' }}> *</Text></Text>
+						<Input
+							onChangeText={text => handleOnchange(text, 'area')}
+							onFocus={() => handleError(null, 'area')}
+							placeholder="Enter the Area"
+							error={errors.area}
+							style={styles.input}
 						/>
 					</View>
 
@@ -312,8 +361,6 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 
-
-
 	// marginVertical: 5,
 	//   fontSize: 14,
 	//   fontWeight:'bold',
@@ -337,9 +384,7 @@ const styles = StyleSheet.create({
 	},
 
 	input: {
-
 		// width:'50%',
-
 		// borderColor: '#dbdbdb',
 		backgroundColor: '#F3F4FB',
 		paddingHorizontal: 15,
@@ -348,7 +393,6 @@ const styles = StyleSheet.create({
 		padding: 10,
 		fontSize: 14,
 		textAlignVertical: 'top',
-
 	},
 });
 export default AddScreen;

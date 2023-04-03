@@ -1,24 +1,41 @@
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import {
+  useWindowDimensions,
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import COLORS from '../../conts/colors';
-const Button = ({title, onPress = () => {}}) => {
+const Loader = ({ visible = false }) => {
+  const { width, height } = useWindowDimensions();
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.7}
-      style={{
-        height: 55,
-        width: '100%',
-        backgroundColor: COLORS.blue,
-        marginVertical: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 18}}>
-        {title}
-      </Text>
-    </TouchableOpacity>
+    visible && (
+      <View style={[style.container, { height, width }]}>
+
+        <ActivityIndicator size="large" color={COLORS.blue} />
+
+      </View>
+    )
   );
 };
 
-export default Button;
+const style = StyleSheet.create({
+  loader: {
+    height: 70,
+    backgroundColor: COLORS.white,
+    marginHorizontal: 50,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  container: {
+    position: 'absolute',
+    zIndex: 10,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+  },
+});
+
+export default Loader;

@@ -60,9 +60,11 @@ const ForgotPasswordScreen = ({ navigation }) => {
 		<SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
 			<Loader visible={loading} />
 			<ScrollView
-				contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
-
-				<Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>
+				contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20, flex: 1, justifyContent: 'center' }}>
+				<Text style={{ color: '#5D5FEE', fontSize: 35, fontWeight: 'bold' }}>
+					Forget Password
+				</Text>
+				<Text style={{ color: COLORS.grey, fontSize: 16, marginVertical: 10 }}>
 					Enter Your Email ID to Reset Password
 				</Text>
 				<View style={{ marginVertical: 20 }}>
@@ -76,6 +78,17 @@ const ForgotPasswordScreen = ({ navigation }) => {
 					/>
 
 					<Button title="Forgot Password" onPress={validate} />
+
+					<Text
+						onPress={() => navigation.navigate("LoginScreen")}
+						style={{
+							color: '#5D5FEE',
+							fontWeight: 'bold',
+							textAlign: 'center',
+							fontSize: 16,
+						}}>
+						Go back to Login?
+					</Text>
 
 				</View>
 			</ScrollView>
