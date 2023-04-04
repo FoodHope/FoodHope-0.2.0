@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Loader from '../../components/Loader';
-import { StyleSheet, Text, TouchableOpacity, View, Linking, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Linking, ScrollView, SafeAreaView, Alert } from 'react-native';
 import { useAuth } from '../../../contexts/AuthContext';
 
 const SettingsScreen = ({ navigation }) => {
@@ -21,7 +21,23 @@ const SettingsScreen = ({ navigation }) => {
 
 
   const handleLogoutPress = async () => {
-    await logout();
+    Alert.alert(
+      'Logout?',
+      'Are you sure you want to Logout?',
+      [
+        {
+          text: 'No',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        {
+          text: 'Yes',
+          onPress: async () => await logout(),
+          style: 'destructive'
+        }
+      ],
+      { cancelable: false }
+    );
     console.log('logout');
   };
 
@@ -31,7 +47,7 @@ const SettingsScreen = ({ navigation }) => {
 
 
   return (<>
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: '#5D5FEE', padding: 23 }}>
         <Text style={{ color: 'white', fontSize: 30, fontWeight: "bold" }}>Settings</Text>
       </View>
@@ -48,10 +64,10 @@ const SettingsScreen = ({ navigation }) => {
         <Text style={styles.logout}>Logout</Text>
       </TouchableOpacity>
 
-     <View style={styles.reachUs}>
-      <TouchableOpacity onPress={handleInstagramPress} style={styles.reach}>
-        <Text style={styles.reachUsList}>Reach us through instagram</Text>
-      </TouchableOpacity>
+      <View style={styles.reachUs}>
+        <TouchableOpacity onPress={handleInstagramPress} style={styles.reach}>
+          <Text style={styles.reachUsList}>Reach us through instagram</Text>
+        </TouchableOpacity>
       </View>
 
     </SafeAreaView>
@@ -78,13 +94,13 @@ const styles = StyleSheet.create({
 
   },
 
-  reach:{
+  reach: {
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 1,
-    borderTopWidth:1,
-    borderTopColor:'lightgrey',
+    borderTopWidth: 1,
+    borderTopColor: 'lightgrey',
 
   },
   listItemText: {
@@ -92,7 +108,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
 
-  reachUsList:{
+  reachUsList: {
     fontSize: 18,
     fontWeight: '300',
 
@@ -104,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
 
-  reachUs:{
+  reachUs: {
     position: 'absolute',
     // height: 50, // Or any height you want
     justifyContent: 'center',
@@ -112,10 +128,10 @@ const styles = StyleSheet.create({
     bottom: 10,
     left: 0,
     right: 0,
-    
+
   }
 
-  
+
 });
 
 export default SettingsScreen;
