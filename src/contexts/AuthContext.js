@@ -24,6 +24,7 @@ export function AuthProvider({ children }) {
 				Mobile: ph,
 				Address: address
 			});
+			await setSnap("FoodData", email,{foods: []})
 		} catch (e) {
 			console.log("error adding doc", e);
 		}

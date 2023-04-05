@@ -26,6 +26,14 @@ const ViewDetailsScreen = ({ navigation, route }) => {
 
             <ScrollView style={{ paddingHorizontal: 20, backgroundColor: '#fff' }}>
 
+
+                <Text style={styles.text}>
+                    <Text style={{ fontWeight: 'bold' }}>
+                        Provider Name :
+                    </Text>
+                    {" " + item.providerName}
+                </Text>
+
                 <Text style={styles.text}>
                     <Text style={{ fontWeight: 'bold' }}>
                         Food Name :

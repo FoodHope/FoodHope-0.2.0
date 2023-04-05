@@ -32,7 +32,7 @@ const RegistrationScreen = ({ navigation }) => {
 		Keyboard.dismiss();
 		let isValid = true;
 
-		if (!inputs.name) {
+		if (!inputs.email) {
 			handleError('Please input email', 'email');
 			isValid = false;
 		} else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
