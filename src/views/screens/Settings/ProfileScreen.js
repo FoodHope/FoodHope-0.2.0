@@ -26,7 +26,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
     const [inputs, setInputs] = useState({
-        email: '',
+        // email: '',
         fullname: '',
         phone: '',
         address: ''
@@ -44,7 +44,7 @@ const ProfileScreen = ({ navigation }) => {
 
     useEffect(() => {
         setInputs({
-            email: user.Email,
+            // email: user.Email,
             fullname: user.Name,
             address: user.Address,
             phone: user.Mobile
@@ -63,13 +63,13 @@ const ProfileScreen = ({ navigation }) => {
         Keyboard.dismiss();
         let isValid = true;
 
-        if (!inputs.email) {
-            handleError('Please input email', 'email');
-            isValid = false;
-        } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-            handleError('Please input a valid email', 'email');
-            isValid = false;
-        }
+        // if (!inputs.email) {
+        //     handleError('Please input email', 'email');
+        //     isValid = false;
+        // } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+        //     handleError('Please input a valid email', 'email');
+        //     isValid = false;
+        // }
 
         if (!inputs.fullname) {
             handleError('Please input fullname', 'fullname');
@@ -114,7 +114,7 @@ const ProfileScreen = ({ navigation }) => {
 
         try {
             setLoading(true);
-            await updateProfile(inputs.fullname, inputs.email, inputs.phone, inputs.address);
+            await updateProfile(inputs.fullname, inputs.phone, inputs.address);
             setLoading(false)
             navigation.navigate("SettingsScreen")
             // await signup(inputs.email, inputs.password, inputs.fullname, inputs.phone);
@@ -123,7 +123,6 @@ const ProfileScreen = ({ navigation }) => {
             console.log(error)
         }
        
-
     };
 
 
@@ -137,7 +136,6 @@ const ProfileScreen = ({ navigation }) => {
 
 
     return (
-
         <View style={{ backgroundColor: 'white', flex: 1 }}>
             <Loader visible={loading} />
             <View style={{ backgroundColor: '#5D5FEE', padding: 20 }}>
@@ -151,7 +149,7 @@ const ProfileScreen = ({ navigation }) => {
 
                 <View style={{ marginVertical: 20, paddingBottom: 20 }}>
 
-                    <Input
+                    {/* <Input
                         onChangeText={text => handleOnchange(text, 'email')}
                         onFocus={() => handleError(null, 'email')}
                         iconName="email-outline"
@@ -159,8 +157,7 @@ const ProfileScreen = ({ navigation }) => {
                         placeholder="Enter your email address"
                         error={errors.email}
                         value={inputs.email}
-
-                    />
+                    /> */}
 
                     <Input
                         onChangeText={text => handleOnchange(text, 'fullname')}
@@ -204,7 +201,7 @@ const ProfileScreen = ({ navigation }) => {
                         }}
                         // icon={<Icon name='code' color='#ffffff' />}
                         // buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-
+                        
                         title='Update' />
 
                 </View>

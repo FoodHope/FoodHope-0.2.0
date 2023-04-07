@@ -7,7 +7,7 @@ import Input from '../components/Input';
 import Loader from '../components/Loader';
 
 const LoginScreen = ({ navigation }) => {
-	const [inputs, setInputs] = React.useState({ email: "", password: '' });
+	const [inputs, setInputs] = React.useState({ email: "svasanth712@gmail.com", password: '123123' });
 	const [errors, setErrors] = React.useState({});
 	const [loading, setLoading] = React.useState(false);
 

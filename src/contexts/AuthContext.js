@@ -31,8 +31,13 @@ export function AuthProvider({ children }) {
 		return createUserWithEmailAndPassword(auth, email, password).then(res => console.log(res.user));
 	}
 
-	function login(email, password) {
-		return signInWithEmailAndPassword(auth, email, password).then(res => console.log(res.user))
+	async function login(email, password) {
+		try {
+			const res = await signInWithEmailAndPassword(auth, email, password);
+			return console.log(res.user);
+		} catch (e) {
+			return console.log("kk", e);
+		}
 	}
 
 	function logout() {
@@ -63,11 +68,12 @@ export function AuthProvider({ children }) {
 		return getSnap("users", currentUser && currentUser.email);
 	}
 
-	async function updateProfile(name, email, phNum, address) {
-		const docRef = doc(db, 'users', currentUser && currentUser.email);
+	async function updateProfile(name, phNum, address) {
+		let e = currentUser && currentUser.email;
+		const docRef = doc(db, 'users', e);
 		await updateDoc(docRef, {
 			Name: name,
-			Email: email,
+			Email: e,
 			Mobile: phNum,
 			Address: address
 		}).then(() => {

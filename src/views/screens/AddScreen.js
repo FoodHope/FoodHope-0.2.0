@@ -13,16 +13,16 @@ import Loader from '../components/Loader';
 const AddScreen = ({navigation}) => {
 
 	const [inputs, setInputs] = useState({
-		name: 'asfsf',
+		name: '',
 		veg: true,
-		serves: '234',
+		serves: '',
 		imageID: 0,
-		area: 'sfasfsf sv',
-		expiresIn: '32',
-		phNum: '2343433333',
+		area: '',
+		expiresIn: '',
+		phNum: '',
 		alt_phNum: '',
-		address: 'sffa  dsfsdf ',
-		landmark: 'sfsd ',
+		address: '',
+		landmark: '',
 		desc: ''
 	});
 
